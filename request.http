@@ -1,0 +1,9 @@
+POST http://127.0.0.1:8080/ctl/register
+Content-Type: application/json
+
+{
+  "ip": "127.0.0.1",
+  "port": 8080,
+  "name": "simpleApp",
+  "serviceName": "SIMPLE"
+}
