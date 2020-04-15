@@ -32,7 +32,7 @@ public class DefaultDataStore implements DataStore{
     public void register(Instance instance) {
         Service service = storage.get(instance.getServiceName());
         if (service!=null){
-            service.getInstances().get()
+//            service.getInstances().get()
         }
     }
 }
