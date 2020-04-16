@@ -1,3 +1,5 @@
 rootProject.name = 'minicat'
 include 'naming'
+include 'client'
+include 'core'
 

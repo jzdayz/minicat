@@ -9,7 +9,7 @@ object Utils {
         concurrentHashMap[k] = v
         return concurrentHashMap
     }
-    fun expelMap(map: ConcurrentHashMap<String,Service>){
+    fun expelMap(map: ConcurrentHashMap<String, Service>){
 //        map.forEachValue()
     }
 }
