@@ -1,6 +1,7 @@
 package io.github.jzdayz.cat.util;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Utils {
@@ -11,6 +12,11 @@ public class Utils {
                 iterator.remove();
             }
         }
+    }
+
+    public static <K> K operation(K k, Consumer<K> handle){
+        handle.accept(k);
+        return k;
     }
 
 

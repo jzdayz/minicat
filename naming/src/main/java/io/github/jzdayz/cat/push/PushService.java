@@ -52,7 +52,7 @@ public class PushService {
                 try {
                     doPush(pushInfo,service);
                 }catch (Exception e){
-                    log.error("",e);
+                    log.error(" push data error ",e);
                 }
             });
         });

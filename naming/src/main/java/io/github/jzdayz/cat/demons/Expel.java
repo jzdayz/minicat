@@ -4,6 +4,7 @@ import io.github.jzdayz.cat.config.Config;
 import io.github.jzdayz.cat.core.Service;
 import io.github.jzdayz.cat.datastore.DataStore;
 import io.github.jzdayz.cat.util.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @org.springframework.stereotype.Service
 public class Expel implements ApplicationListener<ApplicationStartedEvent> {
 
@@ -34,7 +36,10 @@ public class Expel implements ApplicationListener<ApplicationStartedEvent> {
                     Utils.remove(service.getInstances().values().iterator(),(instance -> {
                         long lastHeartBeat = instance.getLastHeartBeat();
                         long now = System.currentTimeMillis();
-                        return now - lastHeartBeat > Config.instanceTimeout(TimeUnit.MILLISECONDS);
+                        return Utils.operation(now - lastHeartBeat > Config.instanceTimeout(TimeUnit.MILLISECONDS),(val)->{
+                            if (val)
+                                log.info(" expel instance {}",instance);
+                        });
                     }));
                 }
                 return service.getInstances().size() == 0;
