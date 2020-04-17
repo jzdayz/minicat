@@ -39,7 +39,7 @@ public class PushService {
             Runtime.getRuntime().availableProcessors()*3,
             30,
             TimeUnit.MINUTES,
-            new ArrayBlockingQueue<>(Integer.MAX_VALUE)
+            new ArrayBlockingQueue<>(1000)
     );
 
     public void onUpdate(Service service){

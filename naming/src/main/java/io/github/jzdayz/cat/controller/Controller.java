@@ -8,7 +8,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/minicat/")
 @RestController
 public class Controller {
 

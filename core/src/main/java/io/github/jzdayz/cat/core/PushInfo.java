@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Type;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +12,5 @@ import java.lang.reflect.Type;
 public class PushInfo {
     private String ip;
     private int port;
-    private Type type;
+    private PushType type;
 }

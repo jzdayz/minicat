@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE' apply false
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE' apply false
@@ -27,13 +29,19 @@ subprojects {
 		mavenCentral()
 	}
 
+	dependencyManagement {
+		imports {
+			mavenBom(SpringBootPlugin.BOM_COORDINATES)
+		}
+	}
+
 	dependencies {
 		// 这里spring boot 的父依赖失效了，后续采用依赖pom不使用plugin
-		compileOnly 'org.projectlombok:lombok:1.18.12'
-		implementation 'io.netty:netty-all:4.1.48.Final'
+		compileOnly 'org.projectlombok:lombok'
+		implementation 'io.netty:netty-all'
 		implementation "org.jetbrains.kotlin:kotlin-stdlib"
 		implementation "org.jetbrains.kotlin:kotlin-reflect"
-		annotationProcessor 'org.projectlombok:lombok:1.18.12'
+		annotationProcessor 'org.projectlombok:lombok'
 	}
 
 	test {

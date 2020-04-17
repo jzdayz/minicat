@@ -15,6 +15,10 @@ public class R {
     private String message;
     private Object body;
 
+    public boolean success(){
+        return code == 200;
+    }
+
     public static R ok(){
         return new R();
     }

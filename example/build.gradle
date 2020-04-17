@@ -1,6 +1,8 @@
 dependencies {
+    implementation project(':client')
     implementation project(':core')
     implementation 'org.slf4j:slf4j-api'
+    implementation 'org.slf4j:slf4j-simple'
     implementation 'com.alibaba:fastjson:1.2.68'
     implementation 'com.squareup.okhttp3:okhttp:4.5.0'
 }

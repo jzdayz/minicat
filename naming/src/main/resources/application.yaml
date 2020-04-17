@@ -1,2 +1,4 @@
 instance:
   expel: 90
+server:
+  port: 20202
