@@ -1,0 +1,3 @@
+[submodule "minicat-naming-console"]
+	path = minicat-naming-console
+	url = https://github.com/jzdayz/minicat-naming-console.git
