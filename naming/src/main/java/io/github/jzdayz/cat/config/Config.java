@@ -18,10 +18,10 @@ public class Config implements EnvironmentAware {
         return environment.getProperty(key,defaultVal);
     }
 
-    public static long instanceTimeout(TimeUnit timeUnit){
-        return timeUnit.toSeconds(Long.parseLong(
+    public static long instanceTimeout(){
+        return (Long.parseLong(
                 config(Constant.INSTANCE_TIMEOUT,Constant.INSTANCE_TIMEOUT_DEFAULT)
-        ));
+        ) * 1000);
     }
 
     @Override

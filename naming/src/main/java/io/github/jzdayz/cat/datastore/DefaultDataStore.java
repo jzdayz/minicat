@@ -6,6 +6,7 @@ import io.github.jzdayz.cat.push.PushService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +28,11 @@ public class DefaultDataStore implements DataStore{
     @Override
     public Service getService(String serviceName) {
         return storage.get(serviceName);
+    }
+
+    @Override
+    public Collection<Service> getService() {
+        return storage.values();
     }
 
     @Override

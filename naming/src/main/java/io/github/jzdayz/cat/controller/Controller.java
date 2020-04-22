@@ -8,6 +8,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 public class Controller {
 
@@ -23,6 +25,15 @@ public class Controller {
             return R.error(" %s is empty ","serviceName");
         }
         Service service = dataStore.getService(serviceName);
+        if (service == null){
+            return R.error("no service");
+        }
+        return R.ok(service);
+    }
+
+    @GetMapping("/all")
+    public R all(){
+        Collection<Service> service = dataStore.getService();
         if (service == null){
             return R.error("no service");
         }

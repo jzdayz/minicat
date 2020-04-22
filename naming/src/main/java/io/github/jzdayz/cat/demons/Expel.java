@@ -36,7 +36,7 @@ public class Expel implements ApplicationListener<ApplicationStartedEvent> {
                     Utils.remove(service.getInstances().values().iterator(),(instance -> {
                         long lastHeartBeat = instance.getLastHeartBeat();
                         long now = System.currentTimeMillis();
-                        return Utils.operation(now - lastHeartBeat > Config.instanceTimeout(TimeUnit.MILLISECONDS),(val)->{
+                        return Utils.operation(now - lastHeartBeat > Config.instanceTimeout(),(val)->{
                             if (val)
                                 log.info(" expel instance {}",instance);
                         });

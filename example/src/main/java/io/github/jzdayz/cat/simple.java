@@ -1,5 +1,6 @@
 package io.github.jzdayz.cat;
 
+import com.alibaba.fastjson.JSON;
 import io.github.jzdayz.cat.core.Service;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +18,13 @@ public class simple {
             client.register("testServiceName","testInstacneName3");
 
 
+            client = new Client("13.9.9.91",4004);
+            client.register("test","app1");
+
+
             Service s = client.list("testServiceName");
+
+            System.out.println(JSON.toJSONString(s));
 
             if (s.getInstances().size() != 3){
                 System.err.println("error--");
