@@ -1,5 +1,8 @@
 dependencies {
-    implementation project(':core')
+    implementation project(':core'){
+        //disabling all transitive dependencies of this dependency
+        transitive = true
+    }
     implementation 'org.slf4j:slf4j-api'
     implementation 'com.alibaba:fastjson:1.2.68'
     implementation 'com.squareup.okhttp3:okhttp:4.5.0'
