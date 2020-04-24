@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: test1
+  minicat:
+    appIp: 10.2.96.93
+    service: test-service
+server:
+  port: 10090
