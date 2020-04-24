@@ -2,6 +2,3 @@ instance:
   expel: 90
 server:
   port: 20202
-spring:
-  freemarker:
-    suffix: .html
