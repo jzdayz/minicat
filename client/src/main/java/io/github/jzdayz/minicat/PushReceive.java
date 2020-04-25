@@ -30,6 +30,7 @@ public class PushReceive {
                     datagramSocket.receive(packet);
                     log.info("receive push data");
                     Service service = JSON.parseObject(packet.getData(), Service.class);
+                    log.info("{}",service);
                     this.loadBalancer.reload(service);
                 } catch (IOException e) {
                     log.error("error receive server push data",e);
@@ -39,6 +40,7 @@ public class PushReceive {
         thread.setName("push-receive");
         thread.setDaemon(true);
         thread.start();
+        log.info("minicat receive is up [{}]",datagramSocket.getLocalPort());
     }
 
 }

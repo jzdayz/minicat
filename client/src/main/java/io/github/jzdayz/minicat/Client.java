@@ -111,7 +111,8 @@ public class Client {
     }
 
     private void doRegister(Instance instance,String url){
-        RequestBody body = RequestBody.create(JSON.toJSONString(instance), MEDIA_TYPE_JSON);
+
+        RequestBody body = RequestBody.create( JSON.toJSONString(instance),MEDIA_TYPE_JSON);
         Request request = new Request.Builder()
                 .url(url+"/register")
                 .post(body)

@@ -36,13 +36,15 @@ public class MinicatAutoConfiguration {
     }
 
     @Bean
-    public LoadBalancer loadBalancer(){
-        return new LoadBalancer();
+    public LoadBalancer loadBalancer(Client client){
+        return new LoadBalancer(client);
     }
 
     @Bean
     public PushReceive pushReceive(Client client,LoadBalancer loadBalancer){
-        return new PushReceive(client,loadBalancer);
+        PushReceive pushReceive = new PushReceive(client, loadBalancer);
+        pushReceive.start();
+        return pushReceive;
     }
 
     @Bean

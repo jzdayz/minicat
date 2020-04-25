@@ -2,6 +2,5 @@ rootProject.name = 'minicat'
 include 'naming'
 include 'client'
 include 'core'
-include 'example'
 include 'minicat-client-spring-boot-starter'
 

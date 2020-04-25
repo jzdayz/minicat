@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jzdayz.minicat.core.Instance;
 import io.github.jzdayz.minicat.core.PushInfo;
 import io.github.jzdayz.minicat.core.Service;
+import io.github.jzdayz.minicat.datastore.DataStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -42,18 +43,20 @@ public class PushService {
             new ArrayBlockingQueue<>(1000)
     );
 
-    public void onUpdate(Service service){
+    public void onUpdate(DataStore dataStore, Service service){
         
         executorService.submit(()->{
-            ConcurrentHashMap<String, Instance> instances = service.getInstances();
-            instances.values().forEach(instance->{
-                PushInfo pushInfo = instance.getPushInfo();
-                log.info("push service info to {}",pushInfo);
-                try {
-                    doPush(pushInfo,service);
-                }catch (Exception e){
-                    log.error(" push data error ",e);
-                }
+            dataStore.all().forEach((serviceName,serviceS)->{
+                ConcurrentHashMap<String, Instance> instances = serviceS.getInstances();
+                instances.values().forEach(instance->{
+                    PushInfo pushInfo = instance.getPushInfo();
+                    log.info("push service info to {}",pushInfo);
+                    try {
+                        doPush(pushInfo,service);
+                    }catch (Exception e){
+                        log.error(" push data error ",e);
+                    }
+                });
             });
         });
 

@@ -49,7 +49,7 @@ public class DefaultDataStore implements DataStore{
                     return;
                 }
                 instances.put(instance.getName(),instance);
-                pushService.onUpdate(service);
+                pushService.onUpdate(this,service);
                 return;
             }
         }
@@ -60,7 +60,7 @@ public class DefaultDataStore implements DataStore{
         serviceNew.setInstances(instanceNew);
         serviceNew.setName(instance.getServiceName());
         storage.put(serviceNew.getName(),serviceNew);
-        pushService.onUpdate(service);
+        pushService.onUpdate(this,serviceNew);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DefaultDataStore implements DataStore{
         synchronized (service){
             Instance remove = service.getInstances().remove(instance.getName());
             if (remove!=null){
-                pushService.onUpdate(service);
+                pushService.onUpdate(this,service);
             }
         }
     }

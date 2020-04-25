@@ -50,28 +50,20 @@ allprojects {
 
 subprojects {
 
-    apply plugin: 'io.spring.dependency-management'
-
     configurations {
         compileOnly {
             extendsFrom annotationProcessor
         }
     }
 
-
-    dependencyManagement {
-        imports {
-            mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-        }
-    }
-
     dependencies {
-        // 这里spring boot 的父依赖失效了，后续采用依赖pom不使用plugin
-        compileOnly 'org.projectlombok:lombok'
-        implementation 'io.netty:netty-all'
+
         implementation "org.jetbrains.kotlin:kotlin-stdlib"
         implementation "org.jetbrains.kotlin:kotlin-reflect"
-        annotationProcessor 'org.projectlombok:lombok'
+
+        compileOnly 'org.projectlombok:lombok:1.18.12'
+        annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
     }
 
 
