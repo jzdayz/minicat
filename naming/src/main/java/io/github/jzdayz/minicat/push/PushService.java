@@ -5,37 +5,23 @@ import io.github.jzdayz.minicat.core.Instance;
 import io.github.jzdayz.minicat.core.PushInfo;
 import io.github.jzdayz.minicat.core.Service;
 import io.github.jzdayz.minicat.datastore.DataStore;
+import io.github.jzdayz.minicat.lifecycle.AbstractLifecycle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
-import java.net.SocketException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.*;
 
 @Slf4j
 @Component
-public class PushService {
-
-    private static DatagramSocket socket;
+public class PushService extends AbstractLifecycle{
 
     private ObjectMapper objectMapper;
+    private UDP udp;
 
-    private Map<String,UdpPacket> packetMap = new HashMap<>(64);
-
-    static {
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException e) {
-            log.error("can't create udp socket");
-            System.exit(1);
-        }
-    }
-
-    public PushService(ObjectMapper objectMapper) {
+    public PushService(UDP udp,ObjectMapper objectMapper) {
+        this.udp = udp;
         this.objectMapper = objectMapper;
     }
 
@@ -64,13 +50,23 @@ public class PushService {
 
     }
 
+    public String key(PushInfo pushInfo){
+        return pushInfo.getIp()+"-"+pushInfo.getPort()+"-"+pushInfo.getType();
+    }
+
     private void doPush(PushInfo pushInfo,Service service) throws Exception{
 
+//        UdpPacket.builder().service(service);
         byte[] bytes = objectMapper.writeValueAsBytes(service);
         InetSocketAddress inetSocketAddress = new InetSocketAddress(pushInfo.getIp(), pushInfo.getPort());
         DatagramPacket packet = new DatagramPacket(bytes,bytes.length, inetSocketAddress);
-        socket.send(packet);
+        udp.send(pushInfo,packet,service);
 
     }
 
+    @Override
+    public void stop() {
+        executorService.shutdownNow();
+        log.info("shutdown executor service...");
+    }
 }

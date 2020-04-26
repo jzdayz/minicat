@@ -2,3 +2,6 @@ instance:
   expel: 90
 server:
   port: 20202
+#logging:
+#  level:
+#    root: trace
