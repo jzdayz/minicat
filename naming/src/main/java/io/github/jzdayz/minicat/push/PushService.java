@@ -12,6 +12,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.*;
 
 @Slf4j
@@ -21,6 +23,8 @@ public class PushService {
     private static DatagramSocket socket;
 
     private ObjectMapper objectMapper;
+
+    private Map<String,UdpPacket> packetMap = new HashMap<>(64);
 
     static {
         try {
@@ -45,20 +49,18 @@ public class PushService {
 
     public void onUpdate(DataStore dataStore, Service service){
         
-        executorService.submit(()->{
-            dataStore.all().forEach((serviceName,serviceS)->{
-                ConcurrentHashMap<String, Instance> instances = serviceS.getInstances();
-                instances.values().forEach(instance->{
-                    PushInfo pushInfo = instance.getPushInfo();
-                    log.info("push service info to {}",pushInfo);
-                    try {
-                        doPush(pushInfo,service);
-                    }catch (Exception e){
-                        log.error(" push data error ",e);
-                    }
-                });
+        executorService.submit(()-> dataStore.all().forEach((serviceName, serviceS)->{
+            ConcurrentHashMap<String, Instance> instances = serviceS.getInstances();
+            instances.values().forEach(instance->{
+                PushInfo pushInfo = instance.getPushInfo();
+                log.info("push service info to {}",pushInfo);
+                try {
+                    doPush(pushInfo,service);
+                }catch (Exception e){
+                    log.error(" push data error ",e);
+                }
             });
-        });
+        }));
 
     }
 
